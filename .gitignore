@@ -1,0 +1,4 @@
+composer.phar
+vendor/
+/nbproject/private/
+.DS_Store
