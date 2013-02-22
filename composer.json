@@ -1,0 +1,22 @@
+{
+    "name": "dunglas/php-tor-control",
+    "type": "library",
+    "description": "TOR control library",
+    "keywords": ["tor"],
+    "homepage": "http://dunglas.fr",
+    "license": "MIT",
+    "authors": [
+    {
+        "name": "Kévin Dunglas",
+        "email": "dunglas@gmail.com"
+    }
+    ],
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.4"
+    }
+}
