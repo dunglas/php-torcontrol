@@ -14,7 +14,7 @@ namespace TorControl;
 /**
  * TorControl
  *
- * Control a TOR server using the socket connection.
+ * Control a Tor server using the socket connection.
  * The spec of the control protocol: https://gitweb.torproject.org/torspec.git/blob_plain/HEAD:/control-spec.txt
  *
  * @author Kévin Dunglas <dunglas@gmail.com>
@@ -159,7 +159,7 @@ class TorControl
     }
 
     /**
-     * Connects to the TOR server
+     * Connects to the Tor server
      *
      * @return \TorControl\TorControl
      * @throws Exception\IOError
@@ -181,7 +181,7 @@ class TorControl
     }
 
     /**
-     * Authenticates to the TOR server
+     * Authenticates to the Tor server
      *
      * Autodetect authentication method if not set in options
      *
@@ -219,7 +219,7 @@ class TorControl
     }
 
     /**
-     * Executes a command on the TOR server
+     * Executes a command on the Tor server
      *
      * @param  string                  $cmd
      * @throws Exception\IOError
@@ -278,7 +278,7 @@ class TorControl
     }
 
     /**
-     * Closes the connection to the TOR server
+     * Closes the connection to the Tor server
      */
     public function quit()
     {

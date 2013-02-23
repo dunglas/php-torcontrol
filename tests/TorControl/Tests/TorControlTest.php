@@ -12,7 +12,7 @@
 namespace TorControl\Tests;
 
 use TorControl\TorControl;
-use \TorControl\Exception\IOError;
+use TorControl\Exception\IOError;
 
 /**
  *
@@ -23,7 +23,7 @@ class TorControlTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->torControl = new TorControl(array('password' => 'test', 'foo' => 'bar'));
+        $this->torControl = new TorControl(array('foo' => 'bar'));
     }
 
     public function tearDown()
@@ -74,6 +74,9 @@ class TorControlTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(false, $this->torControl->isConnected());
     }
 
+    /**
+     * Authentication
+     */
     public function testAuthenticate()
     {
         $this->torControl->connect();

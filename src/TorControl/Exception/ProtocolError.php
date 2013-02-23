@@ -20,6 +20,7 @@ class ProtocolError extends \UnexpectedValueException
 {
 
     /**
+     * Response
      *
      * @var string
      */
@@ -38,6 +39,7 @@ class ProtocolError extends \UnexpectedValueException
     /**
      * Sets the response
      *
+     * @param string $response
      * @return string
      */
     public function setResponse($response)

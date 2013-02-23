@@ -18,4 +18,5 @@ namespace TorControl\Exception;
  */
 class IOError extends \Exception
 {
+
 }
