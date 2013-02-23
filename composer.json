@@ -1,7 +1,7 @@
 {
-    "name": "dunglas/php-tor-control",
+    "name": "dunglas/php-torcontrol",
     "type": "library",
-    "description": "TOR control library",
+    "description": "Tor control library",
     "keywords": ["tor"],
     "homepage": "http://dunglas.fr",
     "license": "MIT",
