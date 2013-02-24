@@ -230,7 +230,10 @@ class TorControl
     {
         $this->checkConnected();
 
-        fputs($this->socket, "$cmd\r\n");
+        $write = @fwrite($this->socket, "$cmd\r\n");
+        if ($write === false) {
+            throw new Exception\IOError('Error while writing to the Tor server');
+        }
 
         $data = array();
         while (true) {
@@ -284,7 +287,10 @@ class TorControl
     {
         if ($this->connected && $this->socket) {
             $this->executeCommand("QUIT");
-            fclose($this->socket);
+            $close = @fclose($this->socket);
+            if (!$close) {
+                throw new Exception\IOError('Error while closing the connection to the Tor server');
+            }
         }
 
         $this->connected = false;
