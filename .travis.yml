@@ -5,7 +5,7 @@ php:
 before_script:
   - sudo apt-get update -qq
   - sudo apt-get install -qq tor
-  - sudo echo "ControlPort 9051" >> /etc/tor/torrc
-  - sudo service tor restart
+  - sudo service tor stop
+  - tor -f tests/torrc
   - sleep 10
   - composer install
