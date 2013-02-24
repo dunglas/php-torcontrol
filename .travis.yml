@@ -2,6 +2,7 @@ php:
   - "5.4"
 
 before_script:
-  - apt-get install tor
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq tor
   - tor -f tests/torrc &
   - composer update
