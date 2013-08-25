@@ -22,7 +22,7 @@ If not already done, install [Composer](http://getcomposer.org/).
 
 Add php-torcontrol to your `composer.json`:
 
-    composer require dunglas/php-torcontrol:dev-master
+    composer require dunglas/php-torcontrol
 
 Usage
 -----
