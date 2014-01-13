@@ -19,6 +19,8 @@ Features
 Installation
 ------------
 
+Note: if you use the [Symfony](http://symfony.com) framework, you should use [DunglasTorControlBundle](https://github.com/dunglas/DunglasTorControlBundle).
+
 If not already done, install [Composer](http://getcomposer.org/).
 
 Add php-torcontrol to your `composer.json`:
