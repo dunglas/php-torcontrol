@@ -4,6 +4,7 @@ PHP TorControl, a library to control TOR
 TorControl is a PHP library to control a [Tor](https://www.torproject.org/) server.
 
 [![Build Status](https://travis-ci.org/dunglas/php-torcontrol.png?branch=master)](https://travis-ci.org/dunglas/php-torcontrol)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/82838db8-eff6-42bb-b4b6-c2d128a62d98/mini.png)](https://insight.sensiolabs.com/projects/82838db8-eff6-42bb-b4b6-c2d128a62d98)
 
 Features
 --------
