@@ -45,13 +45,20 @@ $tc = new TorControl\TorControl(
     )
 );
 
-$tc->authenticate();
+try{
+    $tc->authenticate();
 
-// Renew identity
-$res = $tc->executeCommand('SIGNAL NEWNYM');
+    // Renew identity
+    $res = $tc->executeCommand('SIGNAL NEWNYM');
 
-// Echo the server reply code and message
-echo $res[0]['code'] . ': ' . $res[0]['message'];
+    // Echo the server reply code and message
+    echo $res[0]['code'] . ': ' . $res[0]['message'];
+
+}
+catch(Exception $e)
+{
+    echo $e->getMessage();
+}
 
 // Quit
 $tc->quit();
