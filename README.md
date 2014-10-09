@@ -40,8 +40,8 @@ require 'vendor/autoload.php';
 $tc = new TorControl\TorControl(
     array(
         'server' => 'localhost',
-        'port'   => 9051
-        'password' => 'MySecr3tPassw0rd';
+        'port'   => 9051,
+        'password' => 'MySecr3tPassw0rd'
     )
 );
 
