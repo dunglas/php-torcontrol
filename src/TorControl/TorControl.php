@@ -209,7 +209,11 @@ class TorControl
                 break;
 
             case static::AUTH_METHOD_COOKIE:
-                $cookie = file_get_contents($this->options['cookiefile']);
+                $cookieFile = $this->getOption('cookiefile');
+                if (false === $cookieFile) {
+                    throw new \Exception('You must set a cookiefile option');
+                }
+                $cookie = file_get_contents($cookieFile);
 
                 $this->executeCommand('AUTHENTICATE ' . bin2hex($cookie));
                 break;
