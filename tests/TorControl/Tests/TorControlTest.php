@@ -15,12 +15,10 @@ use TorControl\TorControl;
 use TorControl\Exception\IOError;
 
 /**
- *
  * @author dunglas
  */
 class TorControlTest extends \PHPUnit_Framework_TestCase
 {
-
     public function setUp()
     {
         $this->torControl = new TorControl(array('foo' => 'bar'));
@@ -32,7 +30,7 @@ class TorControlTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Quote function
+     * Quote function.
      */
     public function testQuote()
     {
@@ -47,7 +45,7 @@ class TorControlTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Option systtem
+     * Option systtem.
      */
     public function testOption()
     {
@@ -55,7 +53,7 @@ class TorControlTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Connection
+     * Connection.
      */
     public function testConnect()
     {
@@ -75,7 +73,7 @@ class TorControlTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Authentication
+     * Authentication.
      */
     public function testAuthenticate()
     {
@@ -84,5 +82,4 @@ class TorControlTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($this->torControl->getOption('authmethod') === TorControl::AUTH_METHOD_NOT_SET);
     }
-
 }

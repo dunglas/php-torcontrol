@@ -12,11 +12,10 @@
 namespace TorControl\Exception;
 
 /**
- * IOError
+ * IOError.
  *
  * @author Kévin Dunglas <dunglas@gmail.com>
  */
 class IOError extends \Exception
 {
-
 }

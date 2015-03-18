@@ -12,7 +12,7 @@
 namespace TorControl;
 
 /**
- * TorControl
+ * TorControl.
  *
  * Control a Tor server using the socket connection.
  * The spec of the control protocol: https://gitweb.torproject.org/torspec.git/blob_plain/HEAD:/control-spec.txt
@@ -21,21 +21,20 @@ namespace TorControl;
  */
 class TorControl
 {
-
     const AUTH_METHOD_NOT_SET = -1;
     const AUTH_METHOD_NULL = 0;
     const AUTH_METHOD_HASHEDPASSWORD = 1;
     const AUTH_METHOD_COOKIE = 2;
 
     /**
-     * Connected
+     * Connected.
      *
      * @var boolean
      */
     protected $connected = false;
 
     /**
-     * Default options
+     * Default options.
      *
      * @var array
      */
@@ -43,25 +42,25 @@ class TorControl
         'hostname' => '127.0.0.1',
         'port' => 9051,
         'timeout' => -1,
-        'authmethod' => self::AUTH_METHOD_NOT_SET
+        'authmethod' => self::AUTH_METHOD_NOT_SET,
     );
 
     /**
-     * Options
+     * Options.
      *
      * @var array
      */
     protected $options;
 
     /**
-     * Socket to the TOR server
+     * Socket to the TOR server.
      *
      * @var resource
      */
     protected $socket;
 
     /**
-     * Check if connected
+     * Check if connected.
      *
      * @throws Exception\IOError
      */
@@ -73,7 +72,7 @@ class TorControl
     }
 
     /**
-     * Detects auth method using the PROTOCOLINFO command
+     * Detects auth method using the PROTOCOLINFO command.
      *
      * @throws Exception\ProtocolError
      */
@@ -106,20 +105,20 @@ class TorControl
     }
 
     /**
-     * Creates a new instance of the controller
+     * Creates a new instance of the controller.
      *
      * @param array $options Configuration settings
-     * All settings are optional.
-     * - hostname: server to join (default: 127.0.0.1)
-     * - port: port to try (default: 9051)
-     * - authmethod: connection method (if not set will try to autodetect)
-     *   Allowed values:
-     *   - TorControl::AUTH_METHOD_NULL: no security
-     *   - TorControl::AUTH_METHOD_HASHEDPASSWORD: password
-     *   - TorControl::AUTH_METHOD_COOKIE: cookie file
-     * - password: the password (mandatory if AUTH_METHOD_HASHEDPASSWORD is used)
-     * - cookiefile: the file (if TorControl::AUTH_METHOD_COOKIE is used, if not set will autodetect)
-     * - timeout: connection timeout (default: default_socket_timeout's PHP setting)
+     *                       All settings are optional.
+     *                       - hostname: server to join (default: 127.0.0.1)
+     *                       - port: port to try (default: 9051)
+     *                       - authmethod: connection method (if not set will try to autodetect)
+     *                       Allowed values:
+     *                       - TorControl::AUTH_METHOD_NULL: no security
+     *                       - TorControl::AUTH_METHOD_HASHEDPASSWORD: password
+     *                       - TorControl::AUTH_METHOD_COOKIE: cookie file
+     *                       - password: the password (mandatory if AUTH_METHOD_HASHEDPASSWORD is used)
+     *                       - cookiefile: the file (if TorControl::AUTH_METHOD_COOKIE is used, if not set will autodetect)
+     *                       - timeout: connection timeout (default: default_socket_timeout's PHP setting)
      */
     public function __construct(array $options = array())
     {
@@ -130,7 +129,7 @@ class TorControl
     }
 
     /**
-     * Destructs the instance
+     * Destructs the instance.
      */
     public function __destruct()
     {
@@ -138,7 +137,7 @@ class TorControl
     }
 
     /**
-     * Gets the controller connection status
+     * Gets the controller connection status.
      *
      * @return boolean
      */
@@ -148,9 +147,10 @@ class TorControl
     }
 
     /**
-     * Gets an option
+     * Gets an option.
      *
-     * @param  string $key
+     * @param string $key
+     *
      * @return mixed
      */
     public function getOption($key)
@@ -159,9 +159,10 @@ class TorControl
     }
 
     /**
-     * Connects to the Tor server
+     * Connects to the Tor server.
      *
      * @return \TorControl\TorControl
+     *
      * @throws Exception\IOError
      */
     public function connect()
@@ -172,7 +173,7 @@ class TorControl
 
         $this->socket = @fsockopen($this->options['hostname'], $this->options['port'], $errno, $errstr, $this->options['timeout']);
         if (!$this->socket) {
-            throw new Exception\IOError($errno . ' - ' . $errstr);
+            throw new Exception\IOError($errno.' - '.$errstr);
         }
 
         $this->connected = true;
@@ -181,11 +182,12 @@ class TorControl
     }
 
     /**
-     * Authenticates to the Tor server
+     * Authenticates to the Tor server.
      *
      * Autodetect authentication method if not set in options
      *
      * @return \TorControl\TorControl
+     *
      * @throws \Exception
      */
     public function authenticate()
@@ -205,7 +207,7 @@ class TorControl
                     throw new \Exception('You must set a password option');
                 }
 
-                $this->executeCommand('AUTHENTICATE ' . static::quote($password));
+                $this->executeCommand('AUTHENTICATE '.static::quote($password));
                 break;
 
             case static::AUTH_METHOD_COOKIE:
@@ -215,7 +217,7 @@ class TorControl
                 }
                 $cookie = file_get_contents($cookieFile);
 
-                $this->executeCommand('AUTHENTICATE ' . bin2hex($cookie));
+                $this->executeCommand('AUTHENTICATE '.bin2hex($cookie));
                 break;
         }
 
@@ -223,11 +225,13 @@ class TorControl
     }
 
     /**
-     * Executes a command on the Tor server
+     * Executes a command on the Tor server.
      *
-     * @param  string                  $cmd
+     * @param string $cmd
+     *
      * @throws Exception\IOError
      * @throws Exception\ProtocolError
+     *
      * @return array
      */
     public function executeCommand($cmd)
@@ -272,7 +276,7 @@ class TorControl
                 $data[] = array(
                     'code' => $code,
                     'separator' => $separator,
-                    'message' => $message
+                    'message' => $message,
                 );
 
                 if ($separator === ' ') {
@@ -285,7 +289,7 @@ class TorControl
     }
 
     /**
-     * Closes the connection to the Tor server
+     * Closes the connection to the Tor server.
      */
     public function quit()
     {
@@ -301,16 +305,16 @@ class TorControl
     }
 
     /**
-     * Quotes and escapes to use in a command
+     * Quotes and escapes to use in a command.
      *
-     * @param  string $str
+     * @param string $str
+     *
      * @return string
      */
     public static function quote($str)
     {
         $str = strtr($str, array('\\' => '\\\\', '"' => '\"'));
 
-        return '"' . $str . '"';
+        return '"'.$str.'"';
     }
-
 }

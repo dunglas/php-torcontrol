@@ -12,11 +12,10 @@
 namespace TorControl\Exception;
 
 /**
- * TOR Error
+ * TOR Error.
  *
  * @author Kévin Dunglas <dunglas@gmail.com>
  */
 class TorError extends ProtocolError
 {
-
 }

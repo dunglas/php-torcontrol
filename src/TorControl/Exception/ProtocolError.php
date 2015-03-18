@@ -12,22 +12,21 @@
 namespace TorControl\Exception;
 
 /**
- * ProtocolError
+ * ProtocolError.
  *
  * @author Kévin Dunglas <dunglas@gmail.com>
  */
 class ProtocolError extends \UnexpectedValueException
 {
-
     /**
-     * Response
+     * Response.
      *
      * @var string
      */
     protected $response;
 
     /**
-     * Gets the response
+     * Gets the response.
      *
      * @return string
      */
@@ -37,14 +36,14 @@ class ProtocolError extends \UnexpectedValueException
     }
 
     /**
-     * Sets the response
+     * Sets the response.
      *
      * @param string $response
+     *
      * @return string
      */
     public function setResponse($response)
     {
         $this->response = $response;
     }
-
 }
