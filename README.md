@@ -64,7 +64,7 @@ $tc->quit();
 Related
 -------
 
-* [Tor Control protocol](https://gitweb.torproject.org/torspec.git/blob_plain/HEAD:/control-spec.txt)
+* [Tor Control protocol](https://gitweb.torproject.org/torspec.git/tree/control-spec.txt)
 
 Credits
 -------
