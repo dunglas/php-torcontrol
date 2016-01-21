@@ -82,4 +82,39 @@ class TorControlTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($this->torControl->getOption('authmethod') === TorControl::AUTH_METHOD_NOT_SET);
     }
+
+    /**
+     * Test multiline replies.
+     */
+    public function testMultilineReplies()
+    {
+        $_cmds = array(
+            'GETINFO version',
+            'GETINFO config-file',
+            'GETINFO config-text', // this should return a "multiline" reply
+            'GETINFO version',
+            'GETINFO config-file'
+        );
+
+        $responses = array();
+
+        $this->torControl->connect();
+        $this->torControl->authenticate();
+
+        foreach ($_cmds as $cmd) {
+            $responses[] = $this->torControl->executeCommand($cmd);
+        }
+
+        // Assert we got the same number of responses entries as commands sent.
+        // If we do, and there are no exceptions, we can handle multi-line replies.
+        $this->assertEquals(count($_cmds), count($responses));
+        // Test to ensure multiline reply codes are correctly populated.
+        foreach ($responses[2] as $resp) {
+            $this->assertSame($resp['code'], '250');
+            $this->assertSame($resp['separator'], '+');
+        }
+        // And test that we return to normal replies otherwise.
+        $this->assertSame($responses[3][0]['separator'], '-');
+    }
+
 }
