@@ -39,8 +39,8 @@ require 'vendor/autoload.php';
 // Connect to the TOR server using password authentication
 $tc = new TorControl\TorControl(
     array(
-        'server' => 'localhost',
-        'port'   => 9051,
+        'hostname' => 'localhost',
+        'port'     => 9051,
         'password' => 'MySecr3tPassw0rd',
         'authmethod' => 1
     )
