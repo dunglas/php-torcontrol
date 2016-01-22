@@ -11,8 +11,8 @@
 
 namespace TorControl\Tests;
 
-use TorControl\TorControl;
 use TorControl\Exception\IOError;
+use TorControl\TorControl;
 
 /**
  * @author dunglas
