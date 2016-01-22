@@ -88,7 +88,7 @@ class TorControlTest extends \PHPUnit_Framework_TestCase
      */
     public function testMultilineReplies()
     {
-        $_cmds = array(
+        $cmds = array(
             'GETINFO version',
             'GETINFO config-file',
             'GETINFO config-text', // this should return a "multiline" reply
@@ -101,20 +101,23 @@ class TorControlTest extends \PHPUnit_Framework_TestCase
         $this->torControl->connect();
         $this->torControl->authenticate();
 
-        foreach ($_cmds as $cmd) {
+        foreach ($cmds as $cmd) {
             $responses[] = $this->torControl->executeCommand($cmd);
         }
 
-        // Assert we got the same number of responses entries as commands sent.
-        // If we do, and there are no exceptions, we can handle multi-line replies.
-        $this->assertEquals(count($_cmds), count($responses));
+        // Assert we got the same number of response entries as commands sent.
+        // If we do, and there are no exceptions, we can handle multiline replies.
+        $this->assertEquals(count($cmds), count($responses));
+
         // Test to ensure multiline reply codes are correctly populated.
+        // (See section 2.3 of the Tor control spec.)
         foreach ($responses[2] as $resp) {
-            $this->assertSame($resp['code'], '250');
-            $this->assertSame($resp['separator'], '+');
+            $this->assertSame('250', $resp['code']);
+            $this->assertSame('+', $resp['separator']);
         }
+
         // And test that we return to normal replies otherwise.
-        $this->assertSame($responses[3][0]['separator'], '-');
+        $this->assertSame('-', $responses[3][0]['separator']);
     }
 
 }

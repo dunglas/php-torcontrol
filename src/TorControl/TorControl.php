@@ -261,7 +261,13 @@ class TorControl
                     $last_separator = $separator;
                 }
 
-                if (!$multiline) {
+                if ($multiline) {
+                    $data[] = array(
+                        'code' => $last_code,
+                        'separator' => $last_separator,
+                        'message' => $line
+                    );
+                } else {
                     if ($code === false || $separator === false) {
                         $e = new Exception\ProtocolError('Bad response format');
                         $e->setResponse($response);
@@ -282,16 +288,7 @@ class TorControl
 
                         return $e;
                     }
-                }
 
-
-                if ($multiline) {
-                    $data[] = array(
-                        'code' => $last_code,
-                        'separator' => $last_separator,
-                        'message' => $line
-                    );
-                } else {
                     $data[] = array(
                         'code' => $code,
                         'separator' => $separator,
@@ -299,7 +296,7 @@ class TorControl
                     );
                 }
 
-                if ($separator === ' ') {
+                if (' ' === $separator) {
                     break 2;
                 }
             }
