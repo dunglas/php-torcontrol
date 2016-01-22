@@ -161,9 +161,9 @@ class TorControl
     /**
      * Connects to the Tor server.
      *
-     * @return \TorControl\TorControl
-     *
      * @throws Exception\IOError
+     *
+     * @return \TorControl\TorControl
      */
     public function connect()
     {
@@ -186,9 +186,9 @@ class TorControl
      *
      * Autodetect authentication method if not set in options
      *
-     * @return \TorControl\TorControl
-     *
      * @throws \Exception
+     *
+     * @return \TorControl\TorControl
      */
     public function authenticate()
     {
