@@ -3,20 +3,24 @@
     "type": "library",
     "description": "Tor control library",
     "keywords": ["tor"],
-    "homepage": "http://dunglas.fr",
+    "homepage": "https://dunglas.fr",
     "license": "MIT",
-    "authors": [
-    {
+    "authors": [{
         "name": "Kévin Dunglas",
-        "email": "dunglas@gmail.com"
-    }
-    ],
-    "autoload": {
-        "psr-0": {
-            "": "src/"
-        }
-    },
+        "email": "dunglas@gmail.com",
+        "homepage": "https://dunglas.fr"
+    }],
     "require": {
         "php": ">=5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "TorControl\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TorControl\\Tests\\": "tests/Tests/"
+        }
     }
 }

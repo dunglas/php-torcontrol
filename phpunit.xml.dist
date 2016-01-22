@@ -12,13 +12,13 @@
 
     <testsuites>
         <testsuite name="TorControl">
-            <directory>./tests/TorControl/Tests</directory>
+            <directory>./tests/Tests</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory suffix=".php">./src/TorControl</directory>
+            <directory suffix=".php">./src</directory>
         </whitelist>
     </filter>
 
