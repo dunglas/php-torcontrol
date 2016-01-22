@@ -29,7 +29,7 @@ class TorControl
     /**
      * Connected.
      *
-     * @var boolean
+     * @var bool
      */
     protected $connected = false;
 
@@ -38,12 +38,12 @@ class TorControl
      *
      * @var array
      */
-    protected static $defautOptions = array(
+    protected static $defautOptions = [
         'hostname' => '127.0.0.1',
         'port' => 9051,
         'timeout' => -1,
         'authmethod' => self::AUTH_METHOD_NOT_SET,
-    );
+    ];
 
     /**
      * Options.
@@ -120,10 +120,10 @@ class TorControl
      *                       - cookiefile: the file (if TorControl::AUTH_METHOD_COOKIE is used, if not set will autodetect)
      *                       - timeout: connection timeout (default: default_socket_timeout's PHP setting)
      */
-    public function __construct(array $options = array())
+    public function __construct(array $options = [])
     {
         $this->options = array_merge(static::$defautOptions, $options);
-        if ($this->options['timeout'] === -1) {
+        if (-1 === $this->options['timeout']) {
             $this->options['timeout'] = ini_get('default_socket_timeout');
         }
     }
@@ -139,7 +139,7 @@ class TorControl
     /**
      * Gets the controller connection status.
      *
-     * @return boolean
+     * @return bool
      */
     public function isConnected()
     {
@@ -192,7 +192,7 @@ class TorControl
      */
     public function authenticate()
     {
-        if ($this->options['authmethod'] === static::AUTH_METHOD_NOT_SET) {
+        if (static::AUTH_METHOD_NOT_SET === $this->options['authmethod']) {
             $this->detectAuthMethod();
         }
 
@@ -203,7 +203,7 @@ class TorControl
 
             case static::AUTH_METHOD_HASHEDPASSWORD:
                 $password = $this->getOption('password');
-                if ($password === false) {
+                if (false === $password) {
                     throw new \Exception('You must set a password option');
                 }
 
@@ -239,11 +239,11 @@ class TorControl
         $this->checkConnected();
 
         $write = @fwrite($this->socket, "$cmd\r\n");
-        if ($write === false) {
+        if (false === $write) {
             throw new Exception\IOError('Error while writing to the Tor server');
         }
 
-        $data = array();
+        $data = [];
         while (true) {
             $response = fread($this->socket, 1024);
 
@@ -262,38 +262,38 @@ class TorControl
                 }
 
                 if ($multiline) {
-                    $data[] = array(
+                    $data[] = [
                         'code' => $last_code,
                         'separator' => $last_separator,
-                        'message' => $line
-                    );
+                        'message' => $line,
+                    ];
                 } else {
-                    if ($code === false || $separator === false) {
+                    if (false === $code || false === $separator) {
                         $e = new Exception\ProtocolError('Bad response format');
                         $e->setResponse($response);
 
                         throw $e;
                     }
 
-                    if (!in_array($separator, array(' ', '+', '-'))) {
+                    if (!in_array($separator, [' ', '+', '-'])) {
                         $e = new Exception\ProtocolError('Unknown separator');
                         $e->setResponse($response);
 
                         throw $e;
                     }
 
-                    if (!in_array(substr($code, 0, 1), array('2', '6'))) {
+                    if (!in_array(substr($code, 0, 1), ['2', '6'])) {
                         $e = new Exception\TorError($message, $code);
                         $e->setResponse($response);
 
                         return $e;
                     }
 
-                    $data[] = array(
+                    $data[] = [
                         'code' => $code,
                         'separator' => $separator,
-                        'message' => $message
-                    );
+                        'message' => $message,
+                    ];
                 }
 
                 if (' ' === $separator) {
@@ -311,7 +311,7 @@ class TorControl
     public function quit()
     {
         if ($this->connected && $this->socket) {
-            $this->executeCommand("QUIT");
+            $this->executeCommand('QUIT');
             $close = @fclose($this->socket);
             if (!$close) {
                 throw new Exception\IOError('Error while closing the connection to the Tor server');
@@ -330,7 +330,7 @@ class TorControl
      */
     public static function quote($str)
     {
-        $str = strtr($str, array('\\' => '\\\\', '"' => '\"'));
+        $str = strtr($str, ['\\' => '\\\\', '"' => '\"']);
 
         return '"'.$str.'"';
     }
