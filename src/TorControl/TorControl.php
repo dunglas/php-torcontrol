@@ -247,39 +247,56 @@ class TorControl
         while (true) {
             $response = fread($this->socket, 1024);
 
+            $multiline = false;
+            $last_code = null;
+            $last_separator = null;
             foreach (explode("\r\n", $response) as $line) {
                 $code = substr($line, 0, 3);
                 $separator = substr($line, 3, 1);
                 $message = substr($line, 4);
 
-                if ($code === false || $separator === false) {
-                    $e = new Exception\ProtocolError('Bad response format');
-                    $e->setResponse($response);
-
-                    throw $e;
+                if ('+' === $separator) {
+                    $multiline = true;
+                    $last_code = $code;
+                    $last_separator = $separator;
                 }
 
-                if (!in_array($separator, array(' ', '+', '-'))) {
-                    $e = new Exception\ProtocolError('Unknow separator');
-                    $e->setResponse($response);
+                if ($multiline) {
+                    $data[] = array(
+                        'code' => $last_code,
+                        'separator' => $last_separator,
+                        'message' => $line
+                    );
+                } else {
+                    if ($code === false || $separator === false) {
+                        $e = new Exception\ProtocolError('Bad response format');
+                        $e->setResponse($response);
 
-                    throw $e;
+                        throw $e;
+                    }
+
+                    if (!in_array($separator, array(' ', '+', '-'))) {
+                        $e = new Exception\ProtocolError('Unknown separator');
+                        $e->setResponse($response);
+
+                        throw $e;
+                    }
+
+                    if (!in_array(substr($code, 0, 1), array('2', '6'))) {
+                        $e = new Exception\TorError($message, $code);
+                        $e->setResponse($response);
+
+                        return $e;
+                    }
+
+                    $data[] = array(
+                        'code' => $code,
+                        'separator' => $separator,
+                        'message' => $message
+                    );
                 }
 
-                if (!in_array(substr($code, 0, 1), array('2', '6'))) {
-                    $e = new Exception\TorError($message, $code);
-                    $e->setResponse($response);
-
-                    return $e;
-                }
-
-                $data[] = array(
-                    'code' => $code,
-                    'separator' => $separator,
-                    'message' => $message,
-                );
-
-                if ($separator === ' ') {
+                if (' ' === $separator) {
                     break 2;
                 }
             }
