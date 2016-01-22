@@ -21,7 +21,7 @@ class TorControlTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->torControl = new TorControl(array('foo' => 'bar'));
+        $this->torControl = new TorControl(['foo' => 'bar']);
     }
 
     public function tearDown()
@@ -88,15 +88,15 @@ class TorControlTest extends \PHPUnit_Framework_TestCase
      */
     public function testMultilineReplies()
     {
-        $cmds = array(
+        $cmds = [
             'GETINFO version',
             'GETINFO config-file',
             'GETINFO config-text', // this should return a "multiline" reply
             'GETINFO version',
-            'GETINFO config-file'
-        );
+            'GETINFO config-file',
+        ];
 
-        $responses = array();
+        $responses = [];
 
         $this->torControl->connect();
         $this->torControl->authenticate();
@@ -119,5 +119,4 @@ class TorControlTest extends \PHPUnit_Framework_TestCase
         // And test that we return to normal replies otherwise.
         $this->assertSame('-', $responses[3][0]['separator']);
     }
-
 }
